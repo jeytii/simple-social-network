@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --skin-default: #fff;
+        --skin-main: rgba(0, 0, 0, 0.1);
+        --skin-primary: #333;
+        --skin-secondary: #898989;
+    }
+
+    .dark {
+        --skin-default: #000;
+        --skin-main: rgba(255, 255, 255, 0.1);
+        --skin-primary: #fff;
+        --skin-secondary: #9f9f9f;
+    }
+
+    * {
+        @apply outline-none;
+    }
+}
+
+@layer components {
+    .button {
+        @apply inline-block text-md font-bold rounded py-xs px-lg cursor-pointer;
+    }
+
+    .button:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+
+    .button-default {
+        @apply border border-skin-secondary text-skin-secondary;
+    }
+
+    .button-primary {
+        @apply bg-primary text-skin-white;
+    }
+
+    .button-primary:not(:disabled):hover {
+        @apply bg-primary-dark;
+    }
+
+    .button-primary-outlined {
+        @apply text-primary border border-primary;
+        background: transparent;
+    }
+
+    .button-primary-outlined:hover {
+        @apply bg-primary text-skin-white;
+    }
+
+    .button-success {
+        @apply bg-success text-skin-white;
+    }
+
+    .button-success:not(:disabled):hover {
+        @apply bg-success-dark;
+    }
+
+    .button-success-outlined {
+        @apply text-success border border-success;
+        background: transparent;
+    }
+
+    .button-success-outlined:hover {
+        @apply bg-success text-skin-white;
+    }
+
+    .button-danger {
+        @apply bg-danger text-skin-white;
+    }
+
+    .button-danger:not(:disabled):hover {
+        @apply bg-danger-dark;
+    }
+
+    .button-danger-outlined {
+        @apply text-danger border border-danger;
+        background: transparent;
+    }
+
+    .button-danger-outlined:hover {
+        @apply bg-danger text-skin-white;
+    }
+}
+
+@layer utilities {
+    .full-height {
+        height: calc(100vh - 51px);
+        top: 50.5px;
+    }
+    
+    .transparent {
+        background: transparent;
+    }
+
+    .textfield {
+        @apply block w-full bg-skin-main text-md text-skin-primary border border-skin-main p-sm rounded;
+    }
+
+    .modal-wrapper {
+        @apply fixed left-[0px] top-[0px] w-screen h-screen flex items-center justify-center px-sm z-10;
+        background: rgba(0, 0, 0, .8);
+    }
+
+    .paragraph-sm {
+        @apply text-sm leading-relaxed;
+    }
+
+    .paragraph-md {
+        @apply text-md leading-relaxed;
+    }
+
+    .paragraph-lg {
+        @apply text-lg leading-relaxed;
+    }
+
+    .clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -moz-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        overflow: hidden;
+    }
+}
