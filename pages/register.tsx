@@ -5,33 +5,19 @@ import InputField from 'components/common/InputField';
 import Radio from 'components/common/Radio';
 import Logo from 'components/common/Logo';
 import type { FormEvent } from 'react';
-import type { AxiosError, AxiosResponse } from 'axios';
+import type { AxiosResponse, AxiosError } from 'axios';
+import type { Variables, ErrorData } from 'types/form';
 
-interface Variables {
-  url: string;
-  data: {
-    name: string;
-    email: string;
-    username: string;
-    password: string;
-    password_confirmation: string;
-    birth_date: string;
-    gender: 'Male' | 'Female' | null;
-  };
-}
+type FieldKey =
+  | 'name'
+  | 'email'
+  | 'username'
+  | 'password'
+  | 'password_confirmation'
+  | 'birth_date'
+  | 'gender';
 
-interface ErrorData {
-  message: string;
-  errors: {
-    name: string[];
-    email: string[];
-    username: string[];
-    password: string[];
-    password_confirmation: string[];
-    birth_date: string[];
-    gender: string[];
-  };
-}
+type FieldValue = string | 'Male' | 'Female' | null;
 
 const fields = {
   name: '',
@@ -61,8 +47,8 @@ export default function Register() {
 
   const { mutate, isLoading } = useMutation<
     AxiosResponse,
-    AxiosError<ErrorData>,
-    Variables
+    AxiosError<ErrorData<FieldKey>>,
+    Variables<FieldKey, FieldValue>
   >(['create'], {
     onSuccess() {
       setIsSuccessful(true);

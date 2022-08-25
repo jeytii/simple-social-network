@@ -6,31 +6,13 @@ import InputField from 'components/common/InputField';
 import Alert from 'components/common/Alert';
 import Logo from 'components/common/Logo';
 import type { FormEvent } from 'react';
-import type { AxiosError, AxiosResponse } from 'axios';
+import type { AxiosResponse, AxiosError } from 'axios';
+import type { Variables, ErrorData } from 'types/form';
 
+type LoginVariables = 'username' | 'password';
 type UnauthorizedError = { username: string } | null;
 
-interface LoginVariables {
-  url: string;
-  data: {
-    username: string;
-    password: string;
-  };
-}
-
-interface ResendVariables {
-  url: string;
-  data: {
-    username: string;
-  };
-}
-
-interface LoginErrorData {
-  message: string;
-  errors: {
-    username: string[];
-    password: string[];
-  };
+interface LoginErrorData extends ErrorData<LoginVariables> {
   data: UnauthorizedError;
 }
 
@@ -52,11 +34,11 @@ export default function Index() {
   const { mutate: login, isLoading: loadingLogin } = useMutation<
     AxiosResponse,
     AxiosError<LoginErrorData>,
-    LoginVariables
+    Variables<LoginVariables>
   >(['create'], {
     onSuccess({ data }) {
       Cookies.set('token', data.token);
-      Cookies.set('user', data.user);
+      Cookies.set('user', JSON.stringify(data.user));
       window.location.href = '/home';
     },
     onError(error) {
@@ -95,7 +77,7 @@ export default function Index() {
   const { mutate: resend, isLoading: loadingResend } = useMutation<
     unknown,
     unknown,
-    ResendVariables
+    Variables<'username'>
   >(['create'], {
     onSuccess() {
       setUnauthorizedError(null);
