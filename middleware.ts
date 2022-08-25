@@ -2,9 +2,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
-  const isPublic = ['/', '/register', '/forgot-password'].includes(
-    req.nextUrl.pathname
-  );
+  const isPublic = [
+    '/',
+    '/register',
+    '/forgot-password',
+    '/reset-password/:token',
+  ].includes(req.nextUrl.pathname);
 
   if (isPublic && req.cookies.has('user')) {
     return NextResponse.redirect(new URL('/home', req.url));
@@ -14,5 +17,11 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/register', '/forgot-password', '/home'],
+  matcher: [
+    '/',
+    '/register',
+    '/forgot-password',
+    '/reset-password/:token',
+    '/home',
+  ],
 };
