@@ -10,7 +10,6 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((request) => {
-  console.log(request.url);
   const user = Cookies.get('user');
   const token = Cookies.get('token');
 
