@@ -67,6 +67,8 @@ export default function Index() {
       if (error.response) {
         const { status, data } = error.response;
 
+        clearErrors();
+
         if (status === 422) {
           const keys = Object.keys(data.errors);
 
@@ -77,22 +79,16 @@ export default function Index() {
           keys.forEach((key) => {
             const k = key as keyof typeof fields;
 
-            if (data.errors[k]) {
-              setError(k, {
-                type: 'manual',
-                message: data.errors[k][0],
-              });
-            } else {
-              clearErrors(k);
-            }
+            setError(k, {
+              type: 'manual',
+              message: data.errors[k][0],
+            });
           });
         } else if (status === 401) {
-          clearErrors();
           setCodeResent(false);
           setAlertError(null);
           setUnauthorizedError(data.data);
         } else {
-          clearErrors();
           setUnauthorizedError(null);
           setAlertError(data.message);
         }
@@ -111,23 +107,23 @@ export default function Index() {
     },
   });
 
-  function submit(event: FormEvent) {
+  const submit = (event: FormEvent) => {
     event.preventDefault();
 
     login({
       url: '/login',
       data: getValues(),
     });
-  }
+  };
 
-  async function resendVerificationCode() {
+  const resendVerificationCode = async () => {
     resend({
       url: '/verify/resend',
       data: {
         username: unauthorizedError?.username as string,
       },
     });
-  }
+  };
 
   return (
     <main className='max-w-[360px] bg-skin-main border border-skin-main rounded p-lg mx-auto mt-[40px]'>
