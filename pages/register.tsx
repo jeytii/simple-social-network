@@ -51,6 +51,7 @@ export default function Register() {
     getValues,
     setError,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: fields,
@@ -65,6 +66,8 @@ export default function Register() {
   >(['create'], {
     onSuccess() {
       setIsSuccessful(true);
+      clearErrors();
+      reset();
       window.scrollTo(0, 0);
     },
     onError(error) {
