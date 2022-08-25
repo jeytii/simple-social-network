@@ -55,12 +55,8 @@ export default function Index() {
     LoginVariables
   >(['create'], {
     onSuccess({ data }) {
-      clearErrors();
-      setAlertError(null);
-
       Cookies.set('token', data.token);
       Cookies.set('user', data.user);
-
       window.location.href = '/home';
     },
     onError(error) {
