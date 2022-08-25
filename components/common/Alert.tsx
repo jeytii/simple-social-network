@@ -18,9 +18,8 @@ export default function Alert({
       className={clsx(
         'p-sm border rounded',
         type === 'success' &&
-          'bg-success-transparent text-success-dark border-success',
-        type === 'error' &&
-          'bg-danger-transparent text-danger-dark border-danger',
+          'bg-success-transparent text-success border-success',
+        type === 'error' && 'bg-danger-transparent text-danger border-danger',
         className
       )}
       {...props}
