@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 
 interface Props extends HTMLAttributes<HTMLElement> {
   type: 'success' | 'error';
-  message?: string;
+  message?: string | null;
 }
 
 export default function Alert({
