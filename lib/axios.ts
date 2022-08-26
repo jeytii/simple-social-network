@@ -10,10 +10,9 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((request) => {
-  const user = Cookies.get('user');
   const token = Cookies.get('token');
 
-  if (user && token && request.headers) {
+  if (token && request.headers) {
     const authToken = request.params.authToken || token;
 
     request.headers.Authorization = `Bearer ${authToken}`;
