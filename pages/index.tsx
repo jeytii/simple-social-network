@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import InputField from 'components/common/InputField';
 import Alert from 'components/common/Alert';
-import Logo from 'components/common/Logo';
 import type { FormEvent } from 'react';
 import type { AxiosResponse, AxiosError } from 'axios';
 import type { Variables, ErrorData } from 'types/form';
@@ -38,7 +37,6 @@ export default function Index() {
   >(['create'], {
     onSuccess({ data }) {
       Cookies.set('token', data.token);
-      Cookies.set('user', JSON.stringify(data.user));
       window.location.href = '/home';
     },
     onError(error) {
@@ -50,9 +48,7 @@ export default function Index() {
         if (status === 422) {
           const keys = Object.keys(data.errors);
 
-          if (alertError) {
-            setAlertError(null);
-          }
+          setAlertError(null);
 
           keys.forEach((key) => {
             const k = key as keyof typeof fields;
@@ -104,17 +100,7 @@ export default function Index() {
   };
 
   return (
-    <main className='max-w-[360px] bg-skin-main border border-skin-main rounded p-lg mx-auto mt-[40px]'>
-      <div className='flex items-center justify-center'>
-        <a href='/' className='no-underline'>
-          <Logo />
-        </a>
-      </div>
-
-      <h1 className='text-md text-skin-secondary font-bold text-center mt-xs'>
-        Sign in to your account
-      </h1>
-
+    <>
       {!!codeResent && (
         <Alert
           className='paragraph-sm mt-lg'
@@ -187,12 +173,13 @@ export default function Index() {
           Forgot password
         </a>
       </div>
-    </main>
+    </>
   );
 }
 
 export const getServerSideProps = () => ({
   props: {
     title: "JT's Social Network",
+    formTitle: 'Sign in to your account',
   },
 });

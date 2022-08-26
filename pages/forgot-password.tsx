@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import InputField from 'components/common/InputField';
 import Alert from 'components/common/Alert';
-import Logo from 'components/common/Logo';
 import type { FormEvent } from 'react';
 import type { AxiosError, AxiosResponse } from 'axios';
 
@@ -51,10 +50,7 @@ export default function ForgotPassword() {
         clearErrors();
 
         if (status === 422) {
-          if (alertNotification) {
-            setAlertNotification(null);
-          }
-
+          setAlertNotification(null);
           setError('email', {
             type: 'manual',
             message: data.errors.email[0],
@@ -79,17 +75,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <main className='max-w-[360px] bg-skin-main border border-skin-main rounded p-lg mx-auto mt-[40px]'>
-      <div className='flex items-center justify-center'>
-        <a href='/' className='no-underline'>
-          <Logo />
-        </a>
-      </div>
-
-      <h1 className='text-md text-skin-secondary font-bold text-center mt-xs'>
-        Forgot password
-      </h1>
-
+    <>
       {alertNotification && (
         <Alert
           type={alertNotification.status === 200 ? 'success' : 'error'}
@@ -116,12 +102,13 @@ export default function ForgotPassword() {
           Send password reset request
         </button>
       </form>
-    </main>
+    </>
   );
 }
 
 export const getServerSideProps = () => ({
   props: {
     title: 'Forgot password',
+    formTitle: 'Forgot password',
   },
 });
