@@ -14,6 +14,7 @@ export default async function authenticate(
 
   return {
     props: {
+      isPrivate: true,
       notificationsCount: data.data,
       user,
       ...meta,
